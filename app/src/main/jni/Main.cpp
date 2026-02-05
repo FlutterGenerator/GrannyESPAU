@@ -14,7 +14,7 @@
 #include "Includes/Utils.h"
 #include "Menu/Register.h"
 
-#include "Hooks.h"
+#include "Hooks.cpp"
 
 ESP espOverlay;
 
