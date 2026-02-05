@@ -1,9 +1,9 @@
-# GrannyESPAU
-[![GrannyESPAU Build](https://github.com/FlutterGenerator/GrannyESPAU/actions/workflows/build-apk.yml/badge.svg)](https://github.com/FlutterGenerator/GrannyESPAU/actions/workflows/build-apk.yml)
+# GrannyESP
+[![GrannyESP Build](https://github.com/FlutterGenerator/GrannyESP/actions/workflows/build-apk.yml/badge.svg)](https://github.com/FlutterGenerator/GrannyESPAU/actions/workflows/build-apk.yml)
 
-[![License Info](https://img.shields.io/badge/License-GPL--3.0-blue.svg?style=flat-square)](https://github.com/FlutterGenerator/GrannyESPAU/blob/master/LICENSE)
+[![License Info](https://img.shields.io/badge/License-GPL--3.0-blue.svg?style=flat-square)](https://github.com/FlutterGenerator/GrannyESP/blob/master/LICENSE)
 
-# Granny Esp AU
+# Granny Esp 1.8.2
 **Google Play Release Date:** 1 December 2025
 
 ![](img.jpg)
