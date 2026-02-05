@@ -4,10 +4,6 @@
 
 #include "DarkManager.h"
 
-#include "AutoHook/AutoHook.h"
-
-#include "And64InlineHook/And64InlineHook.hpp"
-
 #include <Substrate/SubstrateHook.h>
 #include <Substrate/CydiaSubstrate.h>
 
@@ -88,61 +84,21 @@ void hack_thread() {
         sleep(1);
     } while (!isLibraryLoaded(targetLibName));
     
-    // ============================
-    // AUTO IL2CPP OFFSETS
-    // ============================
 
-    // Component.get_transform()
-    auto ComponentClass = new LoadClass("UnityEngine", "Component");
-    get_Transform = (void *(*)(void *))
-        ComponentClass->GetMethodOffsetByName("get_transform", 0);
-
-    // Transform.get_position()
-    auto TransformClass = new LoadClass("UnityEngine", "Transform");
-    get_position = (Vector3 (*)(void*))
-        TransformClass->GetMethodOffsetByName("get_position", 0);
-
-    // Camera.get_main()
-    auto CameraClass = new LoadClass("UnityEngine", "Camera");
-    get_camera = (void *(*)())
-        CameraClass->GetMethodOffsetByName("get_main", 0);
-
-    // Camera.WorldToScreenPoint(Vector3)
-    get_screenpos = (Vector3 (*)(void *, Vector3))
-        CameraClass->GetMethodOffsetByName("WorldToScreenPoint", 1);
-
-    // Player.Update()
-    auto PlayerClass = new LoadClass("", "EnemyAIGranny");
-    DWORD PlayerUpdateOffset = PlayerClass->GetMethodOffsetByName("FixedUpdate", 0);
-
-// ============================
-    // HOOK (choose one)
-    // ============================
-
-#if defined(__aarch64__)
-    A64HookFunction((void *) PlayerUpdateOffset,
-                    (void *) Player_update,
-                    (void **) &old_Player_update);
-#else
-    MSHookFunction((void *) PlayerUpdateOffset,
-                   (void *) Player_update,
-                   (void **) &old_Player_update);
-#endif
-
-    // //Component.get_transform();
-    // get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName, 0x1739554);
+      //Component.get_transform();
+     get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName, 0x1739554);
     
-    // //Transform.get_position();
-    // get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x1745370);
+     //Transform.get_position();
+     get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x1745370);
     
-    // //Camera.get_main();
-    // get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x172DD64);
+     //Camera.get_main();
+     get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x172DD64);
     
-    // //Camera.WorldToScreenPoint(Vector3 position);
-    // get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x172D88C);
+     //Camera.WorldToScreenPoint(Vector3 position);
+     get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x172D88C);
     
-    // //Player.Update();
-    // MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0x5706A4),
-    // (void *) &Player_update,
-    // (void **) &old_Player_update);
+    Player.Update();
+    MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0x5706A4),
+        (void *) &Player_update,
+        (void **) &old_Player_update);
 }
