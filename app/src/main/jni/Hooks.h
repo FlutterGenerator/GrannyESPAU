@@ -7,7 +7,6 @@
 #include <Substrate/SubstrateHook.h>
 #include <Substrate/CydiaSubstrate.h>
 
-//Target lib here
 #define targetLibName OBFUSCATE("libil2cpp.so")
 
 void *(*get_Transform)(void *instance);
@@ -83,22 +82,21 @@ void hack_thread() {
      do {
         sleep(1);
     } while (!isLibraryLoaded(targetLibName));
-    
 
-      //Component.get_transform();
-     get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName, 0x239C588);
+    //class Component get_transform();
+    get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName, 0x239C588);
     
-     //Transform.get_position();
-     get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x23AEEC4);
+    //class Transform get_position();
+    get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x23AEEC4);
     
-     //Camera.get_main();
-     get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x2364B78);
+    //class Camera get_main();
+    get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x2364B78);
     
-     //Camera.WorldToScreenPoint(Vector3 position);
-     get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x2364650);
+    //class Camera WorldToScreenPoint(Vector3 position);
+    get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x2364804);
     
-    // public class EnemyAIGranny : MonoBehaviour public virtual void FixedUpdate() { }
-    MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0xA257CC),
-        (void *) &Player_update,
-        (void **) &old_Player_update);
+    //class EnemyAIGranny FixedUpdate(); 
+    MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0xA257CC), 
+    (void *) &Player_update,
+    (void **) &old_Player_update);                                  
 }
