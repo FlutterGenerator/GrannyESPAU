@@ -85,20 +85,20 @@ void hack_thread() {
     } while (!isLibraryLoaded(targetLibName));
     
 
-      //Component.get_transform();
-     get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName, 0x1739554);
+      //UnityEngine class Component public Transform get_transform() { };
+     get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName, 0x239C588);
     
-     //Transform.get_position();
-     get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x1745370);
+     //UnityEngine class Transform public Vector3 get_position() { };
+     get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x23AEEC4);
     
-     //Camera.get_main();
-     get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x172DD64);
+     //UnityEngine public sealed class Camera public static Camera get_main() { };
+     get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x2364B78);
     
-     //Camera.WorldToScreenPoint(Vector3 position);
-     get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x172D88C);
+     //UnityEngine public sealed class Camera public Vector3 WorldToScreenPoint(Vector3 position) { };
+     get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x2364804);
     
-    //Player.Update();
-    MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0x5706A4),
+    // public class EnemyAIGranny : MonoBehaviour public virtual void FixedUpdate() { };
+    MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0xA257CC),
         (void *) &Player_update,
         (void **) &old_Player_update);
 }
