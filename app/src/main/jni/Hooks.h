@@ -8,7 +8,7 @@
 #include <Substrate/CydiaSubstrate.h>
 
 //Target lib here
-#define targetLibName OBFUSCATE("libil2cpp.so")
+#define targettargetLibName OBFUSCATE(targetLibName)
 
 void *(*get_Transform)(void *instance);
 Vector3 (*get_position)(void *instance);
@@ -42,12 +42,12 @@ void DrawESP(ESP esp, int screenWidth, int screenHeight) {
          Allplayers += "All Objects: ";
          Allplayers += std::to_string((int32_t) players.size());
   
-         esp.DrawText(Color::Red(), Allplayers.c_str(), Vector2(screenWidth / 2 ,screenHeight / 2), 35.0f);      
+         esp.DrawText(Color::Black(), Allplayers.c_str(), Vector2(screenWidth / 2 ,screenHeight / 2), 35.0f);      
       }  
     
   if(Esp) {  
   
-   // auto Screen_SetResolution = (void (*)(int, int, bool)) (getAbsoluteAddress("libil2cpp.so",0x176DDAC));
+   // auto Screen_SetResolution = (void (*)(int, int, bool)) (getAbsoluteAddress(targetLibName,0x176DDAC));
    // Screen_SetResolution(screenWidth, screenHeight, true);
       
     for (int i = 0; i < players.size(); i++) {
@@ -83,22 +83,21 @@ void hack_thread() {
      do {
         sleep(1);
     } while (!isLibraryLoaded(targetLibName));
-    
 
-      //UnityEngine class Component public Transform get_transform() { };
-     get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName, 0x239C588);
+    //UnityEngine class Component public Transform get_transform() { };
+    get_Transform = (void *(*)(void *)) getAbsoluteAddress(targetLibName,0x1739554);
     
-     //UnityEngine class Transform public Vector3 get_position() { };
-     get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x23AEEC4);
+    //UnityEngine class Transform public Vector3 get_position() { };
+    get_position = (Vector3 (*)(void*)) getAbsoluteAddress(targetLibName, 0x1745370);
     
-     //UnityEngine public sealed class Camera public static Camera get_main() { };
-     get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x2364B78);
+    //UnityEngine public sealed class Camera public static Camera get_main() { };
+    get_camera = (void *(*)()) getAbsoluteAddress(targetLibName, 0x172DD64);
     
-     //UnityEngine public sealed class Camera public Vector3 WorldToScreenPoint(Vector3 position) { };
-     get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x2364804);
+    //UnityEngine public sealed class Camera public Vector3 WorldToScreenPoint(Vector3 position) { };
+    get_screenpos = (Vector3 (*)(void *, Vector3)) getAbsoluteAddress(targetLibName, 0x172D88C);
     
     // public class EnemyAIGranny : MonoBehaviour public virtual void FixedUpdate() { };
-    MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0xA257CC),
-        (void *) &Player_update,
-        (void **) &old_Player_update);
+    MSHookFunction((void *) getAbsoluteAddress(targetLibName, 0x5706A4), 
+    (void *) &Player_update,
+    (void **) &old_Player_update);                                  
 }
